@@ -64,6 +64,8 @@
 \newcommand*{\pistar}[2][*]{\pi_{#1}(#2)}  % stable htpy grps
 \newcommand*{\timesZ}[1][\Ps]{\otimes_{\Z} \Z[#1]}  % tensor product with Z
 \newcommand*{\LP}[1][\Ps]{L_{#1}}  % stable localised htpy functor
+\newcommand*{\compl}[2][\Ps]{\hat{#2}_{#1}}  % completion
+\DeclareMathOperator{\wlim}{wlim}  % weak limit of spectra
 
 \begin{document}
 \clearpairofpagestyles
@@ -270,14 +272,132 @@ invertible or torsion; there is no free part).
 \section{$\Ps$-Completion}
 
 \begin{Rev}
-  
+  \begin{itemize}
+  \item The $\Ps$-completion $\compl{G}$ of a $\Z$-module $G$ is
+    defined as the projective limit $\projlim_{G\to H} H$ over all
+    morphisms from $G$  to finite $\Z$-modules $H$ with order prime to
+    all $q\in\PS\setminus\Ps$.
+    We get a canonical $\Ps$-completion morphism $G\to\compl{G}$.
+  \item $\Ps$-completion factors over $\Ps$-localisation, \idest there
+    is a canonical morphism $G_\Ps\to\compl{G}$.
+  \item If one restricts to graded $\Z$-modules, $\Ps$-completion
+    preserves the grading.
+  \item We call a $\Ps$-sequence a sequence $(n_i)_{i\in\N}$ of
+    integers with properties for all $i\in\N$
+    \begin{itemize}
+    \item $n_i|n_{i+1}$
+    \item $n_i$ is prime to all $q$ in $\PS\setminus\Ps$.
+    \item For any $n\in\Z$ with above property there is $i\in\N$ with $n|n_i$.
+    \end{itemize}
+    For a finitely generated $\Z$-module $G$ there are isomorphisms
+    \begin{gather*}
+      \compl{G}
+      \cong \varprojlim_i G/n_iG
+      \cong G\otimes\compl{\Z}
+    \end{gather*}
+    which offers a simpler construction of $\compl{G}$.
+  \item A useful notion of limits of spectra is the following:
+    The weak limit of a sequence
+    $(X_i, f_i\colon X_i\to X_{i+1})_{i\in\N}$ of spectra is defined
+    by the cofibre sequence
+    \begin{gather*}
+      \wlim_{i} X_i
+      \longto \prod_i X_i
+      \xrightarrow{\prod_i (id-f_i)\circ \pi_i} \prod_i X_i
+      \;.
+    \end{gather*}
+    If $\pistar[r]{X_i}$ is finite for any degree $r\in\N$, we have
+    $\projlim_i \pistar[r]{X_i} \cong \pistar[r]{\wlim_i X_i}$.
+  \end{itemize}
 \end{Rev}
 \begin{Def}
-  P-Completion
+  A morphism $f\colon X\to Y$ of spectra is called a $\Ps$-completion
+  of $X$ if $\pistar[i] f\colon \pistar[i] X\to \pistar[i] Y$ is a
+  $\Ps$-completion of $\Z$-modules.
 \end{Def}
 \begin{Lem}
-  Existence for f.t., P-local Spectra
-  \begin{proof}[construction]
+  $\Ps$-completions exist for spectra with finitely generated homotopy
+  groups and are unique up to equivalence.
+  \begin{proof}
+    For further details and uniqueness see \cite[Thm. 9.1]{margolis}.
+
+    Let $X$ have finitely generated homotopy groups. For existence
+    consider the following construction which immitates the simpler
+    construction of completion for groups:
+    \begin{Def}
+      Let $n\in\N$ and $(n_i)_{i\in\N}$ a $\Ps$-sequence.
+      \begin{itemize}
+      \item Similarly to groups, where
+        $G/n\coloneqq \operatorname{coim}(G\xrightarrow{\cdot n} G)$,
+        define
+        $\Sph/n\coloneqq\Cone{\Sph\xrightarrow{\times n}\Sph}$.
+      \item Define $X/n\coloneqq X\smashed S/n
+        \cong \Cone{X\xrightarrow{\times n} X}$.
+      \item Define 
+        $\compl{X}\coloneqq\wlim_{i} X/n_i$.
+        This admits canonical morphisms $X/n\xrightarrow{\text{pr}} X/m$ for $m|n$.
+      \end{itemize}
+    \end{Def}
+    \begin{Lem}
+      $\compl{X}$ is a completion of $X$.
+      \begin{proof}
+        The long exact sequence of homotopy corresponding to the
+        cofibre sequence $X\xrightarrow{\times n_i}X\to X/n_i$
+        yields for any degree $r\in\N$ the following short exact
+        sequences, using
+        $\operatorname{coker}(\cdot n_{i-1}) = \pistar[r]{X}/n_{i-1}$
+        and
+        $\pistar[r-1]{X}[n_i] = \operatorname{ker}(\cdot n_i)$.
+        \begin{center}
+          \begin{tikzcd}
+            \vdots \arrow[d, equals]
+            &\vdots \arrow[d]
+            &\vdots \arrow[d]
+            &\vdots \arrow[d]
+            &\vdots \arrow[d, equals]
+            \\
+            0\arrow[r]\arrow[d, equals]
+            &\pistar[r]{X}/n_i \arrow[r]
+            \arrow[d, "\mod n_i" swap]
+            \arrow[dr, phantom, "\circlearrowleft" description]
+            & \pistar[r]{X/n_i} \arrow[r]
+            \arrow[d, "{\pistar[r]{\text{pr}}}"]
+            \arrow[dr, phantom, "\circlearrowleft" description]
+            & \pistar[r-1]{X}[n_i] \arrow[r]
+            \arrow[d, "{\cdot \frac{n_i}{n_{i-1}}}"]
+            & 0 \arrow[d, equals]
+            \\
+            0\arrow[r]\arrow[d, equals]
+            &\pistar[r]{X}/n_{i-1} \arrow[r]\arrow[d]
+            & \pistar[r]{X/n_{i-1}} \arrow[r]\arrow[d]
+            & \pistar[r-1]{X}[n_{i-1}] \arrow[r]\arrow[d]
+            & 0 \arrow[d, equals]
+            \\
+            \vdots
+            &\vdots
+            &\vdots
+            &\vdots
+            &\vdots
+          \end{tikzcd}
+        \end{center}
+        By left-exactness of the limit, we get an exact sequence
+        \begin{center}
+          \begin{tikzcd}
+            0\ar[r]
+            & \varprojlim_i \pistar[r]{X}/n_i \ar[r]
+            \ar[d, equals, "{\text{Def.}}"]
+            & \varprojlim_i \pistar[r]{X/n_i} \ar[r]
+            \ar[d, "\cong" swap, "{\pistar[r-1]{X}\text{ finite}}"]
+            & \varprojlim_i \pistar[r-1]{X}[n_i] 
+            \ar[d, equals, "{\pistar[r-1]{X}\text{ finite}}"]
+            \\
+            & \compl{\pistar[r]{X}}
+            & \pistar[r]{\compl{X}}
+            & 0
+          \end{tikzcd}\qedhere
+        \end{center}
+      \end{proof}
+    \end{Lem}
   \end{proof}
 \end{Lem}
 
