@@ -7,6 +7,7 @@
 \usepackage[mathcal]{eucal}
 \usepackage{tikz-cd}
 \usepackage{enumitem}
+\setlist[description]{font=\normalfont\itshape}
 \newcommand*{\embrace}[1]{(#1)}
 \usepackage{scrlayer-scrpage}
 \usepackage[backend=biber]{biblatex}
@@ -34,6 +35,7 @@
 \newcommand*{\suchthat}{s.\,t.\ }
 \newcommand*{\forexample}{e.\,g.\ }
 \newcommand*{\ifftext}{iff}
+\newcommand*{\newdef}[1]{\emph{#1}}
 
 % general math
 \newcommand*{\N}{\mathds{N}}
@@ -43,7 +45,6 @@
 \newcommand*{\C}{\mathds{C}}
 \newcommand*{\Quaternions}{\mathds{H}}
 \newcommand*{\Octonions}{\mathds{O}}
-\newcommand*{\A}{\mathds{A}}
 \newcommand*{\id}{\text{id}}
 \newcommand*{\longto}{\longrightarrow}
 \newcommand*{\htpic}{\simeq}
@@ -66,6 +67,7 @@
 \newcommand*{\LP}[1][\Ps]{L_{#1}}  % stable localised htpy functor
 \newcommand*{\compl}[2][\Ps]{\hat{#2}_{#1}}  % completion
 \DeclareMathOperator{\wlim}{wlim}  % weak limit of spectra
+\newcommand*{\A}{\mathcal{A}}  % small subcategory of spectra wt f.t.
 
 \begin{document}
 \clearpairofpagestyles
@@ -74,13 +76,17 @@
 \cfoot*{\pagemark}
 
 \begin{center}
-Seminar on Stable Homotopy Theory II – Summary\par
+  Seminar on Stable Homotopy Theory II\par
   \medskip {\Large\bfseries Localisation and Completion of Spectra}
 \end{center}
 \smallskip
 
+This short introduction gives an overview on how several concepts
+known from the algebra of groups can be ported to the category of
+spectra.
 
-\begin{Rev}
+\section{Localisation by a functor}
+\begin{Rev}[Localisation of $\Z$-modules]
   \begin{itemize}
   \item For a $\Z$-module $G$, and $S\subset\Z$ a multiplicatively
     closed subset, the following sequence of canonical maps is exact:
@@ -92,23 +98,27 @@ Seminar on Stable Homotopy Theory II – Summary\par
   \item Thus, for $S=\Z/\bigcup_{p\in\Ps}(p)$ with
     $\Ps\subset\PS\coloneqq\{\text{primes in $\Z$}\}$,
     $G_P\coloneqq S^{-1}G$ will at most admit $P$-torsion.
-  \item A category is graded if it has a self-equivalence
+  \end{itemize}
+\end{Rev}
+\begin{Rev}[Graded Categories]
+  \begin{itemize}
+  \item A category is \newdef{graded} if it has a self-equivalence
     (suspension), \forexample the graded abelian groups $\Abgr$ with
     index shift or $\Spectra$ with suspension. A functor between
-    graded categories is called graded or stable, if it commutes with
-    the suspensions.
+    graded categories is called \newdef{graded} or \newdef{stable}, if it
+    commutes with the suspensions.
   \item The homotopy category $\Spectra$ of CW-spectra admits for any
-    map $f\colon X\to Y$ cofibre sequences (called exact triangles)
+    map $f\colon X\to Y$ \newdef{cofibre sequences} (called exact triangles)
     \begin{gather*}
       {\color{gray} \dotsb \longto \susp[-1] \Cone f
         \xrightarrow{\conem[-1] f} } X \overset f \longrightarrow Y
       \xrightarrow{\conem f} \Cone f \xrightarrow{\conem[2]f} \susp X
       {\color{gray} \longto \dotsb } \;.
     \end{gather*}
-    A morphism will be
-    \begin{description}
+    A morphism will be a
+    \begin{description}[nosep]
     \item[monomorphism] (\idest for $g,h\colon Z\to X$ with
-      $f\circ g=f\circ h$ get $g=h$) \ifftext{} $\conem f=0$.
+      $f\circ g=f\circ h$ get $g=h$) \ifftext{} $\conem f=0$,
     \item[epimorphism] (\idest for $g,h\colon Z\to X$ with
       $g\circ f=h\circ f$ get $g=h$) \ifftext{} $\conem[-1] f = 0$.
     \end{description}
@@ -117,19 +127,20 @@ Seminar on Stable Homotopy Theory II – Summary\par
   \end{itemize}
 \end{Rev}
 
-\section{Localisation by a functor}
-Let $H\colon\Spectra\to\Abgr$ be an exact functor, $X,Y\in\Spectra$,
-and $f\colon X\to Y$ a morphism.
+From here onwards let $H\colon\Spectra\to\Abgr$ be an
+\newdef{exact functor}, $X,Y\in\Spectra$, and $f\colon X\to Y$ a
+morphism.
 
 \begin{Def}
   \begin{itemize}
-  \item $f$ is called an \Hiso if $H(f)$ is an isomorphism.
-  \item $f$ is called the $H$-localisation of $X$ if it is terminal
-    amongst \Hiso s starting at $X$. This makes
+  \item $f$ is called an \newdef{\Hiso{}} if $H(f)$ is an isomorphism.
+  \item $f$ is called the \newdef{$H$-localisation} of $X$ if it is terminal
+    amongst \Hiso s from $X$. This makes
     the $H$-localisation unique up to equivalence in case it exists
     and $X_H\coloneqq Y$.
-  \item $W\in\Spectra$ is called $H$-acyclic if $H(W)=0$.
-  \item $Y$ is called $H$-local if $[W, Y]=0$ for any $H$-acyclic spectrum $W$.
+  \item $W\in\Spectra$ is called \newdef{$H$-acyclic} if $H(W)=0$.
+  \item $Y$ is called \newdef{$H$-local} if $[W, Y]=0$ for any
+    $H$-acyclic spectrum $W$.
     $\Spectra_H$ is the full subcategory of $H$-local spectra of $\Spectra$.
   \end{itemize}
 \end{Def}
@@ -137,9 +148,9 @@ and $f\colon X\to Y$ a morphism.
 \begin{Rem}
   $H$-localisations exist for all $X\in S$ if $H$ is either
   \begin{description}
-  \item[homology functor], \idest covariant, exact, stable, and commutes with
+  \item[homology functor,] \idest covariant, exact, stable, and commutes with
     coproducts, or
-  \item[cohomology functor (represented by $W$)], \idest
+  \item[cohomology functor (represented by $W$),] \idest
     contravariant, exact, stable, and sends coproducts to products,
     with the additional property that for all spectra $X$ and
     $\alpha\colon X\to W$, there is $r\in\N$ \suchthat
@@ -157,7 +168,8 @@ an $H$-localisation.
   $f$ is an $H$-localisation \ifftext{} $Y$ is local.
   Thus the $H$-localisations are uniquely determined by the $H$-local
   resp. $H$-acyclic spectra.
-  \begin{proof}
+  \begin{proof}[proof (scetch)]
+    \cite[compare][Lemma 7.1]{margolis}
     \begin{description}
     \item[$\Rightarrow$]
       Let $W\in\Spectra$ be $H$-acyclic, $g\colon W\to Y$ morphism. In
@@ -172,6 +184,7 @@ an $H$-localisation.
       implied if $g^*\colon [Z,Y]\to [X,Y]$ is an isomorphism.
       The latter holds by exactness of the cohomology functor
       $[-,Y]$.
+      \qedhere
     \end{description}
   \end{proof}
 \end{Prop}
@@ -179,24 +192,27 @@ an $H$-localisation.
   \begin{enumerate}
   \item The $H$-localisation of $X$ is initial amongst morphisms
     from $X$ to an $H$-local spectrum.
-  \item Thus every map $f\colon X\to Y$ has a unique $H$-localisation
-    $f_H\colon X_H\to Y_H$ s.t.
-    $f_H\circ l_x = l_H\circ f\colon X\to Y_H$,
+  \item Thus, every map $f\colon X\to Y$ has a unique $H$-localisation
+    $f_H\colon X_H\to Y_H$, s.t.
+    $f_H\circ l_x = l_H\circ f\colon X\to Y_H$
     if both $H$-localisations $l_X$, $l_Y$ exist.
   \item If all $H$-localisations exist, we get an exact functor
     $\Spectra\to \Spectra_H$, $X\mapsto X_H$, $f\mapsto f_H$.
   \end{enumerate}
   \begin{proof}
     $H$-localisations being initial is proven analoguesly to
-    $\Leftarrow$ in \ref{thm:charhlocal}, with the \Hiso{} as $g$.
-    This then shows functoriality and exactness follows using the five lemma.
+    \enquote{$\Leftarrow$} in \ref{thm:charhlocal}, with the \Hiso{}
+    as $g$. This then shows functoriality, and exactness follows using
+    the five lemma. 
   \end{proof}
 \end{Cor}
 
 \section{Special Case: $\Ps$-Localisation}
-Now let $H\coloneqq \LP\coloneqq \pistar{-}\timesZ$ for $\Ps\subset\PS$, which is a homology
-functor represented by the $\Z[\Ps]$-Moore-spectrum \cite[p.\,111,
-Exc. (a)]{margolis}.
+Now let $H\coloneqq \LP\coloneqq \pistar{-}\timesZ$ for
+$\Ps\subset\PS$, which is a homology functor represented by the
+$\Z[\Ps]$-Moore-spectrum \cite[p.\,111, Exc. (a)]{margolis}.
+This will be our means to transport localisation from homotopy groups
+to spectra.
 Write $X_{\Ps}$ for the $\LP$-localisation of $X$.
 
 \begin{Prop}
@@ -208,18 +224,18 @@ Write $X_{\Ps}$ for the $\LP$-localisation of $X$.
   $\pistar Y$ is $\Ps$-local, \idest a $\Z[\Ps]$-module.
   \begin{proof}
     \begin{description}
-    \item[$\Rightarrow$] Let $Y$ be $\LP$-local.
-      Being a $\Z[\Ps]$-module is equivalent to multiplication by $q$,
-      $(-\cdot q)$, being an isomorphism for $q\in\PS\setminus\Ps$.
+    \item[\enquote{$\Rightarrow$}] Let $Y$ be $\LP$-local.
+      Being a $\Z[\Ps]$-module is equivalent to $(-\cdot q)$ (the
+      multiplication by $q$) being an isomorphism for $q\in\PS\setminus\Ps$.
       So for $q\in\PS\setminus\Ps$ consider the $q$-times pinching map
-      $\times q=\sum_{i=1}^q \id_Y$ which is $(-\cdot q)$ on homotopy
+      $\times q=\sum_{i=1}^q \id_Y$, which is $(-\cdot q)$ on homotopy,
       and thus an isomorphism on $\LP(Y)$.
       By exactness of $\LP$, $\Cone{\times q}$ is $\LP$-acyclic,
       especially the $\LP$-localisation of it is 0.
-      By exactness of the $\LP$-localisation, and with $Y_{\Ps}=Y$,
-      $(\times q)_{\Ps}=\times q$, $\times q$ is an isomorphism, and
-      thus also $(-\cdot q)\colon \pistar Y \to \pistar Y$.
-    \item[$\Leftarrow$] Let $\pistar Y$ be a $\Z[\Ps]$-module and
+      By exactness of the $\LP$-localisation, with $Y_{\Ps}=Y$, and
+      $(\times q)_{\Ps}=\times q$, we see that $\times q$ is an
+      isomorphism. Thus also $(-\cdot q)\colon \pistar Y \to \pistar Y$.
+    \item[\enquote{$\Leftarrow$}] Let $\pistar Y$ be a $\Z[\Ps]$-module and
       $W\in\Spectra$ $\LP$-acyclic.
       To see that any morphism $f\in [W,Y]$ is zero, one first has to
       conclude that the $\LP$-localisation $l_Y$ of $Y$ is an
@@ -243,51 +259,51 @@ Write $X_{\Ps}$ for the $\LP$-localisation of $X$.
 \end{Prop}
 
 \begin{Rem}
-Having adapted the notion of prime localisation to spectra one finds
-that we have very similar properties for spectra concerning the
-detection of torsion. We can now define torsion spectra as those whose
-$\LP[(0)]$-localisation (\idest rational homotopy groups) vanishes.
-Having only torsion for primes in a certain $\Ps\subset\PS$ (the
-$\Ps$-primary spectra) can be characterised as being
-$\LP[\Ps^c]$-acyclic.
+  Having adapted the notion of prime localisation to spectra one finds
+  that we have very similar properties for spectra concerning the
+  detection of torsion. We can now define torsion spectra as those whose
+  $\LP[(0)]$-localisation (\idest rational homotopy groups) vanishes.
+  Having only torsion for primes in a certain $\Ps\subset\PS$ (the
+  $\Ps$-primary spectra) can be characterised as being
+  $\LP[\Ps^c]$-acyclic.
 
-Analoguesly to purely torsion abelian groups, torsion spectra have the
-property that localisation at any set of primes $\Ps\subset\PS$ will
-be an epimorphism (for groups this means: elements are either already
-invertible or torsion; there is no free part).
-\begin{proof}
-  To check this for a torsion spectrum $T$ with $\LP$-localisation
-  $l_T$ just verify that
-  \begin{enumerate}[nosep]
-  \item the $\LP$-localisation $T_{\Ps}$ is
-    $\LP[\Ps^c]$-acyclic, and
-  \item the cone $\Cone {l_T}$ is $\LP[\Ps^c]$-local
-    (it is isomorphic to $T_{\Ps^c}$ by exactness of
-    localisation).
-  \end{enumerate}
-  Then $\conem {l_T} \in [T_{\Ps}, \Cone {l_T}]=0$.
-\end{proof}
+  Analoguesly to purely torsion abelian groups, torsion spectra have the
+  property that localisation at any set of primes $\Ps\subset\PS$ will
+  be an epimorphism (for groups this means: elements are either already
+  invertible or torsion; there is no free part).
+  \begin{proof}
+    To check this for a torsion spectrum $T$ with $\LP$-localisation
+    $l_T$ just verify that
+    \begin{enumerate}[nosep]
+    \item the $\LP$-localisation $T_{\Ps}$ is
+      $\LP[\Ps^c]$-acyclic, and
+    \item the cone $\Cone {l_T}$ is $\LP[\Ps^c]$-local
+      (it is isomorphic to $T_{\Ps^c}$ by exactness of
+      localisation).
+    \end{enumerate}
+    Then $\conem {l_T} \in [T_{\Ps}, \Cone {l_T}]=0$.
+  \end{proof}
 \end{Rem}
 
 \section{$\Ps$-Completion}
 
-\begin{Rev}
+\begin{Rev}[$\Ps$-Completion of Groups]
   \begin{itemize}
-  \item The $\Ps$-completion $\compl{G}$ of a $\Z$-module $G$ is
-    defined as the projective limit $\projlim_{G\to H} H$ over all
-    morphisms from $G$  to finite $\Z$-modules $H$ with order prime to
+  \item The \newdef{$\Ps$-completion} $\compl{G}$ of a $\Z$-module $G$
+    is defined as the projective limit $\projlim_{G\to H} H$ over all
+    morphisms from $G$ to finite $\Z$-modules $H$ with order prime to
     all $q\in\PS\setminus\Ps$.
     We get a canonical $\Ps$-completion morphism $G\to\compl{G}$.
   \item $\Ps$-completion factors over $\Ps$-localisation, \idest there
-    is a canonical morphism $G_\Ps\to\compl{G}$.
+    always is a canonical morphism $G_\Ps\to\compl{G}$.
   \item If one restricts to graded $\Z$-modules, $\Ps$-completion
     preserves the grading.
-  \item We call a $\Ps$-sequence a sequence $(n_i)_{i\in\N}$ of
-    integers with properties for all $i\in\N$
+  \item We call a \newdef{$\Ps$-sequence} a sequence $(n_i)_{i\in\N}$ of
+    integers that satisfies for all $i\in\N$
     \begin{itemize}
     \item $n_i|n_{i+1}$
-    \item $n_i$ is prime to all $q$ in $\PS\setminus\Ps$.
-    \item For any $n\in\Z$ with above property there is $i\in\N$ with $n|n_i$.
+    \item $n_i$ is prime to all $q$ in $\PS\setminus\Ps$, and
+    \item for any $n\in\Z$ with above property there is $i\in\N$ with $n|n_i$.
     \end{itemize}
     For a finitely generated $\Z$-module $G$ there are isomorphisms
     \begin{gather*}
@@ -296,34 +312,40 @@ invertible or torsion; there is no free part).
       \cong G\otimes\compl{\Z}
     \end{gather*}
     which offers a simpler construction of $\compl{G}$.
-  \item A useful notion of limits of spectra is the following:
-    The weak limit of a sequence
-    $(X_i, f_i\colon X_i\to X_{i+1})_{i\in\N}$ of spectra is defined
-    by the cofibre sequence
-    \begin{gather*}
-      \wlim_{i} X_i
-      \longto \prod_i X_i
-      \xrightarrow{\prod_i (id-f_i)\circ \pi_i} \prod_i X_i
-      \;.
-    \end{gather*}
-    If $\pistar[r]{X_i}$ is finite for any degree $r\in\N$, we have
-    $\projlim_i \pistar[r]{X_i} \cong \pistar[r]{\wlim_i X_i}$.
   \end{itemize}
 \end{Rev}
+\begin{Rev}[Limits]
+  A useful notion of limits of spectra is the following:
+  The \newdef{weak limit} of a sequence
+  $(X_i, f_i\colon X_i\to X_{i+1})_{i\in\N}$ of spectra is defined
+  by the cofibre sequence
+  \begin{gather*}
+    \wlim_{i} X_i
+    \longto \prod_i X_i
+    \xrightarrow{\prod_i (id-f_i)\circ \pi_i} \prod_i X_i
+    \;.
+  \end{gather*}
+  If $\pistar[r]{X_i}$ is finite for any degree $r\in\N$, we have
+  $\projlim_i \pistar[r]{X_i} \cong \pistar[r]{\wlim_i X_i}$.
+\end{Rev}
 \begin{Def}
-  A morphism $f\colon X\to Y$ of spectra is called a $\Ps$-completion
-  of $X$ if $\pistar[i] f\colon \pistar[i] X\to \pistar[i] Y$ is a
+  A morphism $f\colon X\to Y$ of spectra is called a
+  \newdef{$\Ps$-completion} of $X$ if in all degrees $r\in\N$
+  $\pistar[r]f\colon\pistar[r] X\to\pistar[r] Y$ is a
   $\Ps$-completion of $\Z$-modules.
 \end{Def}
 \begin{Lem}
-  $\Ps$-completions exist for spectra with finitely generated homotopy
-  groups and are unique up to equivalence.
+  $\Ps$-completions are unique up to equivalence, and they exist for
+  spectra whose $\Ps$-localisation admits homotopy groups finitely
+  generated over $\Z[\Ps]$.
   \begin{proof}
     For further details and uniqueness see \cite[Thm. 9.1]{margolis}.
 
-    Let $X$ have finitely generated homotopy groups. For existence
-    consider the following construction which immitates the simpler
-    construction of completion for groups:
+    As $\Ps$-completion factors over $\Ps$-localisation, without loss
+    of generality $X$ is $\Ps$-local, and thus has finitely
+    generated $\Z[\Ps]$-modules as homotopy groups.
+    For existence then consider the following construction which
+    immitates the simpler construction of completion for groups:
     \begin{Def}
       Let $n\in\N$ and $(n_i)_{i\in\N}$ a $\Ps$-sequence.
       \begin{itemize}
@@ -345,9 +367,9 @@ invertible or torsion; there is no free part).
         cofibre sequence $X\xrightarrow{\times n_i}X\to X/n_i$
         yields for any degree $r\in\N$ the following short exact
         sequences, using
-        $\operatorname{coker}(\cdot n_{i-1}) = \pistar[r]{X}/n_{i-1}$
+        $\operatorname{coim}(\cdot n_{i-1}) = \pistar[r]{X}/n_{i-1}$
         and
-        $\pistar[r-1]{X}[n_i] = \operatorname{ker}(\cdot n_i)$.
+        $\pistar[r-1]{X}[n_i] = \operatorname{ker}(\cdot n_i)$:
         \begin{center}
           \begin{tikzcd}
             \vdots \arrow[d, equals]
@@ -401,14 +423,97 @@ invertible or torsion; there is no free part).
   \end{proof}
 \end{Lem}
 
-\begin{Def}
-  Pro A-Completion
-\end{Def}
+Until now we have ported the easy construction of $\Ps$-completion of
+finitely generated groups to a limited amount of spectra. However,
+getting a notion of completion on a general spectrum, on requires to
+port the more general definition.
+\begin{DefLem}
+  \begin{itemize}
+  \item Let $\Spectra_f$ be the full subcategory of all spectra with
+    finite homotopy groups, and $\Spectra_f'$ a small, equivalent
+    subcategory. 
+    Let $\A$ be the full subcategory of $\Spectra_f'$ of spectra with
+    $\Ps$-torsion homotopy groups.
+  \item Let $\Gamma_\A(X)$ be the category of morphisms $X\to W$
+    with $W\in\A$.
+  \item The mapping $Y\mapsto\lim_{\Gamma_\A(X)}[Y, W]$ is a
+    cohomology functor \cite[Prop. 9.6]{margolis}. Thus, it is
+    represented by a spectrum $\compl[\A]X$ which we call the
+    \newdef{pro $\A$-completion}.
+    Note, that by definition
+    $\pistar{\compl[\A]X} \cong \lim_{(X\to W)\in\Gamma_\A(X)}\pistar W$.
+  \end{itemize}
+\end{DefLem}
 \begin{Thm}
-  Pro A-Completion is the same as P-Completion on f.t. P-local
-  spectra.
+  For a $\Ps$-local spectrum $X$ whose homotopy groups are finitely
+  generated $\Z[\Ps]$-modules holds $\compl[\A]{X}\cong\compl{X}$,
+  \idest the pro $\A$-completion actually generalises $\Ps$-completion.
+  \begin{proof}
+    Note, that with $X/n\in\A$ for any $n\in\Z$ we have canonical
+    maps $\compl[\A]X \to X/n_i$, and thus a canonical map
+    $\compl[\A]X\xrightarrow{\alpha}\compl X$. We will show that this
+    is an equivalence by showing that it is an isomorphism on homotopy
+    groups:
+    \begin{align*}
+      \lim_{\mathclap{(f\colon X\to W\in\Gamma_\A(X)}}\pistar W \cong \pistar{\compl[\A]X}
+      &\longto
+        \pistar{\compl X} \cong \lim_i\pistar{X/n_i}
+      \\
+      (x_f)_{(f\colon X\to W)\in\Gamma_\A(X)}
+      &\longmapsto
+        (x_{\text{pr}_i})_{i\in\N}
+    \end{align*}
+    Beforehands, note the following factorisation for any morphism
+    $f\colon X\to W$ of spectra and any $n\in\N$:
+    \begin{center}
+      \begin{tikzcd}
+        & W \ar[rd, "\simeq"]
+        \\
+        X \ar[ru, "f"] \ar[rd, "\text{pr}"]
+        \ar[rr, phantom, "\circlearrowleft" description]
+        && W/n 
+        \\
+        & X/n \ar[ru]
+      \end{tikzcd}
+    \end{center}
+    \begin{description}
+    \item[$\alpha$ injective] Consider an element
+      $x=(x_f\colon \Sph^n \to W)_f \in\pistar{\compl[\A]X}$.
+      If this is non-trivial, there must be $W$ and $f\colon X\to W$
+      \suchthat $x_f$ is non-trivial. Using $W\simeq W/n_i$ for
+      $i$ resp. $n_i$ large enough (look at homotopy groups) the
+      following commutative diagram yields that, for such $i$,
+      $x_{\text{pr}_i}$ is non-trivial --- and thus also $\alpha(x)$:
+      \begin{center}
+        \begin{tikzcd}
+          && W \ar[rd, "\simeq"]
+          \\
+          \Sph^n
+          \ar[urr, "x_f", bend left]
+          \ar[drr, "x_{\text{pr}_i}", bend right]
+          \ar[r, phantom, "\circlearrowleft" description]
+          & X \ar[ru, "f"] \ar[rd, "\text{pr}_i"]
+          \ar[rr, phantom, "\circlearrowleft" description]
+          && W/n_i 
+          \\
+          &~& X/n \ar[ru]
+        \end{tikzcd}
+      \end{center}
+      The left part commutes by definition, the right part comes from
+      the canonical factorisation.
+    \item[$\alpha$ surjective] Let
+      $\bar x=(x_{\text{pr}_i})_i\in\pistar{\compl X}$.
+      For any $W$ and $f\colon X\to W$ in $\Gamma_\A(X)$ choose $i\gg0$,
+      $n_f\coloneqq n_i$, \suchthat $W\cong W/n_f$.
+      Define $f/n_f\colon X\to W\cong W/n_f$
+      and set $x\coloneqq (x_f\coloneqq (f/n_f)^*x_{\text{pr}_i})_f$.
+      Then $\alpha(x)=\bar x$.
+      \qedhere
+    \end{description}
+  \end{proof}
 \end{Thm}
 
-\nocite{*} \printbibliography
+\nocite{*}
+\printbibliography
 \end{document}
 
