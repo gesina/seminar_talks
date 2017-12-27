@@ -1,0 +1,259 @@
+\documentclass[english]{scrartcl}
+\usepackage{fontspec}
+%\setmainfont{Latin Modern Roman}
+\usepackage{lmodern}
+\usepackage{babel}
+\usepackage{mathtools, amssymb, dsfont, amsthm}
+\usepackage[mathcal]{eucal}
+\usepackage{tikz-cd}
+\usepackage{enumitem}
+\newcommand*{\embrace}[1]{(#1)}
+\usepackage{scrlayer-scrpage}
+\usepackage[backend=biber]{biblatex}
+\bibliography{some_classical_results.bib}
+\usepackage{hyperref}
+\hypersetup{%
+  pdfauthor=Gesina Schwalbe,
+  pdftitle=Stable Homotopy Theory II - Overview of some Classical Results}
+
+\theoremstyle{definition}
+\newtheorem*{Def}{Definition}
+\newtheorem*{DefLem}{Definition/Lemma}
+\newtheorem*{Rev}{Revision}
+\newtheorem*{Thm}{Theorem}
+\newtheorem*{Prop}{Proposition}
+\newtheorem*{Lem}{Lemma}
+\newtheorem*{Rem}{Remark}
+\theoremstyle{remark}
+\newtheorem*{Ex}{Example}
+\newtheorem*{App}{Application}
+
+% generel
+\newcommand*{\idest}{i.\,e.\ }
+\newcommand*{\suchthat}{s.\,t.\ }
+\newcommand*{\N}{\mathds{N}}
+\newcommand*{\Z}{\mathds{Z}}
+\newcommand*{\Zmod}{\Z/2}
+\newcommand*{\R}{\mathds{R}}
+\newcommand*{\C}{\mathds{C}}
+\newcommand*{\Quaternions}{\mathds{H}}
+\newcommand*{\Octonions}{\mathds{O}}
+\newcommand*{\A}{\mathds{A}}
+\newcommand*{\id}{\text{id}}
+\newcommand*{\longto}{\longrightarrow}
+\newcommand*{\htpic}{\simeq}
+\newcommand*{\smashed}{\wedge}
+\newcommand*{\wedged}{\vee}
+
+% specific
+\newcommand*{\susp}{\Sigma}  % suspension
+\newcommand*{\Sph}[1]{\ensuremath{S^{#1}}} % sphere
+\newcommand*{\SphS}{\ensuremath{\$}} % sphere spectrum
+
+% old specific
+\newcommand*{\SP}{\ensuremath{\mathcal{SP}}}
+
+\newcommand*{\mult}{\bigtriangledown} % multiplication of algebra
+\newcommand*{\comult}{\bigtriangleup} % co-multiplication of co-algebra
+\newcommand*{\unit}{\eta} % unit of algebra
+\newcommand*{\counit}{\varepsilon} % co-unit of co-algebra
+\newcommand*{\multmod}{\mu} % scalar multiplication of module over algebra
+\newcommand*{\m}{*} % short for scalar multiplication
+\newcommand*{\SteenrodAlg}{\mathcal{A}} % Steenrod algebra
+\newcommand*{\one}[1]{1_{#1}} % unit (i.e. image of 1 under unit map)
+\newcommand*{\Sq}{\text{Sq}} % Steenrod square
+\newcommand*{\ev}{\text{ev}} % evaluation
+
+
+\begin{document}
+\clearpairofpagestyles
+\ohead*{18/10/2017, University of Regensburg}
+\ihead*{Gesina Schwalbe}
+\cfoot*{\pagemark}
+
+\begin{center}
+  Seminar on Stable Homotopy Theory II – Summary\par
+  \medskip
+  {\Large\bfseries Overview of some Classical Results}
+\end{center}
+\smallskip
+
+
+% \begin{itemize}
+% \item Recall
+%   \begin{itemize}
+%   \item Freudenthal Thm
+%   \item Hurewicz Thm
+%   \item stable htpy grps of spheres
+%   \item Hopf maps
+%   \item Steenrod squares, Adem relations
+%   \end{itemize}
+% \item Ring structure on stable htpy grps of spheres
+%   \cite[Prop. 4.65]{hatcher}, \cite[p. 3]{ravenel}
+% \item Thm.: The Hopf maps are stably essential (\idest not stably
+%   null-homotopic). Show with Steenrod squares.
+%   \cite[Thm. 4L.2]{hatcher}
+% \item Thm.: Some products of Hopf maps are stably essential.
+%     \cite[Prop. 4L.11, p. 498f]{hatcher}
+% \item idea + example \cite[Chap. 4L]{hatcher}
+% \item further example \cite[Chap. 4L]{hatcher}
+% \end{itemize}
+
+\begin{Rev}[Stable Homotopy Groups]
+  For a CW-spectrum $X=\{X_n\}_{n\in\Z}$ the $k$th stable homotopy group
+  is defined as
+  \begin{gather*}
+    \pi_k^s(X)
+    \coloneqq [\susp^k \SphS, X]
+    = \varinjlim_{n\to\infty} \pi_{k+n}(X_n)
+  \end{gather*}
+  The stable homotopy groups of a space $X$ are those of its
+  suspension spectrum%
+  %, also written $\susp X\coloneqq {\susp^n X}_{n\in\N}$
+  .
+\end{Rev}
+
+\begin{Rev}[Freudenthal]
+  For an $(n-1)$-connected space $X$ with non-degenerate base point
+  the following map
+  is an isomorphism for $k<2n-1$, and surjective for $k=2n-1$: 
+  \begin{gather*}
+    \pi_k(X) \longto \pi_{k+1}(\susp X)
+    \quad,\qquad
+    \left( f\colon \Sph k \to X \right) \longmapsto
+    \left( \susp f\colon \Sph{k+1}\to \susp X \right)
+    \;.
+  \end{gather*}
+  This yields:
+  \begin{description}[font=\normalfont\itshape]
+  \item[(Homotopy groups of spheres)]
+    $\pi_k(\Sph n)=0$ for $k<n$, and
+    $\pi_k(\Sph n)\cong\Z$ for $k=n$.
+    \begin{proof}[proof (sketch)]
+      Use the knowledge of $\pi_k(\Sph 1)$ together with the long exact
+      sequence of the Hopf-Bundle $\Sph1\to\Sph3\to\Sph2$; conduct induction.
+    \end{proof}
+  \item[(Stabilisation of stable htpy grps)]
+    For any $X$ as above and $n>k+1$ we get isomorphisms
+    $\pi_{k+n}(\susp^n X)
+    \cong \pi_{k+(n+1)}(\susp^{(n+1)} X))
+    \cong \pi_k^s(X)$.
+    Thus every element in $\pi_k^s(X)$ can be represented by some
+    $f\in\pi_{k+n}(X)$ for $n$ large enough.
+  \end{description}
+\end{Rev}
+
+
+\begin{DefLem}
+  $\pi_*^s \coloneqq \bigoplus_{k\in\N} \pi_k^s(\SphS)$ admits a graded
+  commutative ring structure with the following multiplication
+  \begin{align*}
+    \SwapAboveDisplaySkip
+    \pi_i^s \times \pi_j^s
+    &\longto \pi_{i+j}^s\\
+    \left(
+    [f\colon \Sph{n+i}\to\Sph{n}] = [\susp^{j} f], \quad
+    [g\colon\Sph{n+j}\to\Sph{n}]
+    \right)
+    &\longmapsto f\cdot g \coloneqq [f]\cdot [g] \coloneqq \left[(\susp^j f) \circ g\right]
+  \end{align*}
+  \begin{proof}[proof of graded commutativity (sketch)]
+    Confirm that stably
+    $g\cdot f\htpic f\smashed g$ and
+    $f\cdot g\htpic g\smashed f$.
+    Then show $\tau\circ (f\smashed g)\htpic (g\smashed f)\circ\tau$,
+    where $\tau\colon \Sph r\smashed \Sph s\to \Sph s\smashed \Sph r$ is the
+    transposition of the smash-product components, and of degree $(-1)^{rs}$
+    \cite[see][Prop.\,4.56]{hatcher}.
+  \end{proof}
+\end{DefLem}
+
+One can now identify non-trivial elements in $\pi_*^s$ using Steenrod
+squares. Some considered candidates are the Hopf maps:
+\begin{Rev}[Hopf-invariant-1 maps]
+  Let $n\in\N$ and $f\colon \Sph{2n-1}\to\Sph{n}$ be a continuous map. The
+  mapping cone $Cf=S^{n}\cup_f D^{2n}$ is a CW-complex with the integer
+  cohomology ring structure
+  \begin{gather*}
+    \SwapAboveDisplaySkip
+    H^k(Cf) =
+    \begin{cases}
+      \Z & k=0,n,2n\\
+      0 & \text{else}
+    \end{cases}
+    \quad,\qquad
+    H^*(X) \cong \Z[\alpha,\beta]/
+    \left\langle \beta^2,\alpha\beta,\alpha^2-h(f)\beta\right\rangle
+  \end{gather*}
+  with generators $\alpha\in H^n(X)$, $\beta\in H^{2n}(X)$.
+  Especially $\alpha^2 = h(f)\beta\in H^{2n}(X)$ for some $h(f)\in\Z$,
+  called the Hopf invariant of $f$.
+  The Hopf maps
+  \begin{gather*}
+    \SwapAboveDisplaySkip
+    \eta^{(n)}\colon
+    \Sph{2n-1}\subset\A^2\longto\A^+\cong\Sph{n}
+    \quad,\qquad
+    (z_1,z_2)\longmapsto
+      \begin{cases}
+        \infty & z_2=0\\
+        \frac{z_1}{z_2} & \text{else}
+      \end{cases}
+  \end{gather*}
+  for $\A\in\{\R,\C,\Quaternions,\Octonions\}$
+  and correspondingly $n\in\{1,2,4,8\}$ are
+  the only maps with Hopf invariant 1.
+\end{Rev}
+
+\begin{Thm}
+  $\eta^{(n)}\in\pi_{n-1}^s$ and $(\eta^{(n)})^2\in\pi_{2(n-1)}^s$ for
+  $n\in\{1,2,4,8\}$ are stably essential, \idest represent non-trivial
+  elements of $\pi_*^s$
+  \cite[see][Prop. 4L.2, 4L.11]{hatcher}.
+  \begin{proof}[proof (sketch)]
+   Write $f$ for the considered $\eta^{(n)}$.
+   In both cases we deduce a contradiction from the fact that
+   $\Sq^n\colon \alpha\mapsto \alpha^2=\beta$ is a stable isomorphism
+   on $H^n(Cf;\Zmod)$, and---in the latter case---the Adem relations.
+   
+   \begin{description}
+   \item[$f$ stably essential:]
+     Assume $\susp^k f\htpic *$.
+     Then $\susp^k Cf = C\susp^k f\htpic(\susp\Sph{(2n-1)+k})\wedged\Sph{n+k}$
+     and there is a retraction $\susp^k Cf\to\Sph{n+k}$.
+     By stability of $\Sq^n$ would hold
+     $r^*\circ \Sq^n = \Sq^n\circ r^*$.
+     However, the left-hand side is trivial
+     (bc.\ $H^{2n+k}(\Sph{n+k})=0$),
+     the right-hand side is not by assumption
+     (bc.\ $\Sq^n$ is non-trivial by stability and the above,
+     $r^*$ is surjective by definition).
+   \item[$f^2$ stably essential:]
+     Assume $f^2$ was stably trivial. Wlog exchange $f$ by a
+     $(k-n)$th suspension of itself s.t.\ $(\susp^{n-1}f)\circ f\htpic_H *$.
+     We can use the homotopy $H$ to construct a $(k+2n)$-cell-attachment $F$ to
+     $Cf$, s.t.\ the resulting CW-complex $X=Cf\cup_F D^{k+2n}$ has the properties
+     \begin{description}[font=\normalfont\itshape]
+     \item[$H^r(X)\cong H^r(Cf)$ for $r\leq (k+n)$ (clear by def.):]
+       Hence, $\Sq^{n}\colon H^{k}(X)\to H^{k+n}(X)$ is an isomorphism
+       by naturality.
+     \item[$X/\Sph{k}\htpic C\susp^{n}f$:]
+       Especially, $\text{proj}^*\colon H^r(X)\cong H^r(C\susp^{n}f)$ for $r>k$,
+       and hence $\Sq^{n}\colon H^{k+n}(X)\to H^{k+2n}(X)$ is an
+       isomorphism by naturality.
+     \item[$H^r(X)=0$ for $r\not\in\{0,(k+n),(k+2n)\}$ (from
+       prev. prop.):]
+       Hence, all other Steenrod squares except for the two $\Sq^n$
+       from above, $\Sq^0$ and possibly $\Sq^{2n}$ are trivial.
+     \end{description}
+     However, the Adem relations would decompose the isomorphism
+     $\Sq^n\circ\Sq^n$ into a composition of trivial 
+     Steenrod squares, which yields a contradiction.\qedhere
+   \end{description}
+ \end{proof}
+\end{Thm}
+
+\nocite{*}
+\printbibliography
+\end{document}
+
