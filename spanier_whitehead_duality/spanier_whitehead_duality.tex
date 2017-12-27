@@ -1,0 +1,225 @@
+\documentclass[ngerman, parskip=half]{scrartcl}
+\usepackage{fontspec}
+%\setmainfont{Latin Modern Roman}
+\usepackage{lmodern}
+\usepackage{babel}
+\usepackage{mathtools, amssymb, dsfont, amsthm}
+\usepackage[mathcal]{eucal}
+\usepackage{tikz-cd}
+\usepackage{enumitem}
+\newcommand*{\embrace}[1]{(#1)}
+\usepackage{scrlayer-scrpage}
+\usepackage[backend=biber]{biblatex}
+\bibliography{spanier_whitehead_duality.bib}
+\usepackage{hyperref}
+\hypersetup{%
+  pdfauthor=Gesina Schwalbe,
+  pdftitle=Spanier-Whitehead Duality}
+
+\theoremstyle{definition}
+\newtheorem*{Def}{Definition}
+\newtheorem*{Bsp}{Beispiel}
+\newtheorem*{Thm}{Theorem}
+\newtheorem*{Kor}{Korollar}
+\newtheorem*{Lem}{Lemma}
+
+
+\newcommand*{\SP}{\ensuremath{\mathcal{SP}}}
+\newcommand*{\SPf}{\ensuremath{\SP_{\mathrm{F}}}}
+\newcommand*{\Smash}{\ensuremath{\wedge}}
+\newcommand*{\Wedge}{\ensuremath{\vee}}
+\newcommand*{\SDual}{S-Dual}
+\newcommand*{\dual}[1]{\ensuremath{#1^*}}
+\newcommand*{\Dd}[1]{\ensuremath{D_{#1}}}
+\newcommand*{\dD}[1]{\ensuremath{{}_{#1}D}}
+\newcommand*{\uD}[1]{\ensuremath{{}^{#1}\!D}}
+\newcommand*{\Du}[1]{\ensuremath{D^{#1}}}
+\newcommand*{\Sph}{\ensuremath{S^0}}
+\newcommand*{\htpic}{\simeq}
+\newcommand*{\longto}{\longrightarrow}
+\newcommand*{\N}{\mathds{N}}
+\newcommand*{\Z}{\mathds{Z}}
+\newcommand*{\R}{\mathds{R}}
+\newcommand*{\id}{\text{id}}
+
+\newcommand*{\D}[1]{\mathrm{D}(#1)}
+\newcommand*{\Th}[1]{\text{Th}(#1)}
+\newcommand*{\Sb}[1]{\mathrm{S}(#1)}
+
+\begin{document}
+\clearpairofpagestyles
+\ohead*{24.05.2017, Universität Regensburg}
+\ihead*{Gesina Schwalbe}
+\cfoot*{\pagemark}
+
+\vspace*{.5eM}
+\begin{center}
+  Seminar zur stabilen Homotopietheorie – Vortragsnotizen\par
+  {\LARGE\bfseries Spanier-Whitehead Dualität}
+\end{center}
+\bigskip
+
+\begin{Def}[S-Dualität]
+  Für $X\in\SP$ heißt $\dual{X}\in\SP$ zusammen mit einem Morphismus
+  $\mu\colon X\Smash \dual{X}\to\Sph$ (bzw. äquivalent
+  $\rho\colon\Sph\to X\Smash\dual{X}$) ein \SDual{} von $X$, falls für
+  alle $U,V\in\SP$ die Gruppenhomomorphismen $\Dd{\mu},\dD{\mu}$
+  (bzw. $\uD{\rho},\Du{\rho}$) Isomorphismen sind:
+  \begin{alignat*}{3}
+    &\Dd{\mu}\colon &[U, V\Smash\dual{X}] &\longto [U\Smash X,V]
+    &:\uD{\rho}\\
+    && f &\longmapsto
+           \left(
+           U\Smash X \xrightarrow{f\Smash 1}
+           V\Smash(\dual{X}\Smash X) \xrightarrow{1\Smash\mu}
+           V\Smash\Sph \htpic V
+           \right) \\
+    &\dD{\mu}\colon &[U, V\Smash X] &\longto [U\Smash\dual{X},V]
+    &:\Du{\rho}\\
+  \end{alignat*}  
+\end{Def}
+
+\begin{Lem}[Eindeutigkeit]
+  Ein \SDual{} $X'$ zu $X\in\SP$ ist eindeutig bis auf Homotopie,
+  geschrieben $\dual{X}$
+  (nutze Brownsche Darstellbarkeit von $[-\Smash X,\Sph]$).
+\end{Lem}
+
+\begin{Def}[\SDual{} von Abbildungen]
+  Für $X,Y\in\SP$ mit \SDual{}en $(\dual{X},\mu),(\dual{Y},\nu)$
+  ist das \SDual{} einer Abbildung $f\in[X,Y]$ definiert als
+  $\dual{f}\coloneqq\Theta(\mu,\nu)(f)\in[\dual{Y},\dual{X}]$ durch
+  den Isomorphismus
+  \begin{gather*}
+    \SwapAboveDisplaySkip
+    \Theta(\mu,\nu)\colon
+    [X,Y]
+    \overset{\sim}{\underset{\dD{\nu}}{\longrightarrow}}
+    [\dual{Y}\Smash X, \Sph]
+    \overset{\sim}{\underset{\Dd{\mu}}{\longleftarrow}}
+    [\dual{Y},\dual{X}]
+  \end{gather*}
+\end{Def}
+
+\begin{Lem}
+  Das \SDual{} verhält sich gutartig bzgl. $\Sigma$, Doppeldual,
+  Komposition und $\Smash$:
+  Seien $X,Y,Z\in\SP$, dazu
+  $(\dual{X},\mu)$, $(\dual{Y},\nu)$, $(\dual{Z},\eta)$ \SDual{}e
+  und $f\in[X,Y]$, $g\in[Y,Z]$. Dann (nachrechnen):
+\begin{align*}
+  \text{Triviales Dual}&
+  &\dual{(\Sigma^{p}\Sph)} &= (\Sigma^{-p}\Sph,
+                             \Sigma^{-p}\Sph\Smash\Sigma^{p}\Sph\htpic\Sph)
+                             \quad\text{für $p\in\Z$}\\
+  \text{\Sigma-Operator}&
+  &\dual{(\Sigma^{p}X)} &= (\Sigma^{-p}\dual{X},\mu)
+                          \quad\text{und}\quad\dual{\Sigma^p f} =\Sigma^{-p}\dual{f}\\
+  \text{Doppeldual}&
+  &\dual{(\dual{X})} &= (X,\mu),
+                       \quad\text{und}\quad\dual{(\dual{f})} = f,
+                       \quad\dual{\id_X}=\id_{\dual{X}}\\
+  \text{\Smash-Produkt}&
+  &\dual{(X\Smash Y)} &= (\dual{X}\Smash\dual{Y}, \mu\Smash\nu)\\
+  \text{Komposition}&
+  &\dual{(g\circ f)} &= (\dual{f}\circ\dual{g})
+\end{align*}
+\end{Lem}
+
+\begin{Lem}[Kofasersequenzen]
+  Das \SDual{} endlicher Spektren ist kompatibel mit Kofasersequenzen,
+  d.\,h. für $X,Y\in\SPf$ mit endlichen \SDual{}en
+  $(\dual{X},\mu),(\dual{Y},\nu)$ und eine Kofasersequenz (d.\,h. $Z\htpic Cf$)
+  \begin{alignat*}{4}
+    X &\overset{f}{\longto} \,Y&&\overset{g}{\longto} \,Z&&\overset{h}{\longto}&&\,\phantom{(}\Sigma X
+    \intertext{existiert ein \SDual{} $(\dual{Z},\eta)$, s.\,d.}
+    \dual{X} &\overset{\,\dual{f}}\longleftarrow
+    \dual{Y}&&\overset{\,\dual{g}}\longleftarrow
+    \dual{Z}&&\overset{\,\dual{h}}\longleftarrow &&\,\dual{(\Sigma X)}=\Sigma^{-1}\dual{X}
+  \end{alignat*}
+  wieder eine Kofasersequenz ist.
+  \begin{proof}[Beweisidee]
+    Da $X,Y,\dual{X},\dual{Y}$ endlich sind,
+    sind sie Einhängungsspektren von CW-Kom\-ple\-xen mit entsprechenden
+    Kofasersequenzen.
+    Finde damit einen erzeugenden CW-Kom\-plex für $\dual{Z}$ und eine
+    erzeugende Abbildung für $\eta$.
+  \end{proof}
+\end{Lem}
+
+\begin{Thm}[Existenz]
+  Für endliche Spektren existiert das \SDual{} und ist endlich.
+  \begin{proof}[Beweisidee]
+    Sei $X\in\SPf$. Da $X$ endlich viele Zellen hat, ist
+    Induktion über die Anzahl der Zellen möglich:
+    Für den Induktionsanfang betrachte ein Spektrum mit nur einer
+    Zelle. Dies ist homotop zu $\Sigma^{p}S^q$ für passende
+    $p,q\in\Z$, welches ein endliches \SDual{} besitzt.
+    Für den Induktionsschritt nutze, dass das Ankleben einer Zelle
+    eine Kofasersequenz ist und man das vorige Lemma anwenden kann.
+  \end{proof}
+\end{Thm}
+
+\begin{Kor}[Dualität von Ko-/Homologie]
+  Für $E, X\in\SP$ mit \SDual{} $(\dual{X},\mu)$ von $X$ erhalte
+  Isomorphismen
+  \begin{alignat*}{2}
+    \Dd{\mu}\colon&&
+    [\Sigma^{p}\Sph,E\Smash\dual{X}] = E_{p}(\dual{X})
+    &\overset{\sim}{\longrightarrow}
+      E^{-p}(X) = [\Sigma^{p}\Sph \Smash X, E]\\
+    \dD{\mu}\colon&&
+    E_{p}(X)
+    &\overset{\sim}{\longrightarrow}
+      E^{-p}(\dual{X})
+  \end{alignat*}
+\end{Kor}
+
+\begin{Bsp}
+  Sei $M^n$ eine geschlossene, glatte Mannigfaltigkeit mit Einbettung
+  $M\subset\R^{n+k}$ für ein $k\in\N$, zugehörigem Normalenbündel
+  $\nu^k$ und Thom-Raum $\Th{\nu}$.
+  $\nu$ definiert eine Schlauchumgebung
+  $\D{\nu}\simeq N\subset\R^{n+k}$ von $M$ und eine Kollapsabbildung
+  \begin{gather*}
+    \pi\colon
+    S^{n+k}=(R^{n+k})^* \overset{\text{pr}}\longrightarrow
+    S^{n+k}/(S^{n+k}\setminus N^{\circ}) \simeq
+    % N/\partial N \simeq
+    % \D{\nu}/S{\nu} \eqqcolon
+    \Th{\nu}
+  \end{gather*}
+  Sei $\bar{\Delta}\colon \Th{\nu}\to \Th{\nu}\Smash \D{\nu}$ die
+  von der Diagonalen
+  \begin{gather*}
+   \Delta\colon (\D{\nu},\Sb{\nu})\to (\D{\nu}^2,\Sb{\nu}\times \D{\nu}) 
+  \end{gather*}
+  induzierte Abbildung. Dann erhalten wir insgesamt
+  \begin{gather*}
+    \rho_{n+k}\colon
+    S^{n+k} \overset{\pi}\longrightarrow
+    \Th{\nu} \overset{\bar{\Delta}}\longrightarrow
+    \Th{\nu} \Smash \D{\nu}_+ \xrightarrow{1\Smash \text{pr}}
+    \Th{\nu} \Smash M_+
+  \end{gather*}
+  Die induzierte Abbildung auf den induzierten CW-Spektren (nach
+  Morsetheorie ist $M$ als geschlossene, glatte Mannigfaltigkeit
+  homotop zu einem endlichen CW-Komplex)
+  % \begin{align*}
+  %   \rho \in \left[\Sigma^{n+k}\Sph, \Sigma^{\infty}(\Th{\nu}\Smash M_+)\right]
+  %   &= \left[\Sph, \Sigma^{-n-k}\Sigma^{\infty}\left(\Th{\nu}\Smash M_+\right)\right]\\
+  %   &= \left[\Sph, \Sigma^{-n-k}(\Sigma^{\infty}\Th{\nu})\Smash \Sigma^{\infty}(M_+)\right]
+  % \end{align*}
+  \begin{gather*}
+    \rho \in \left[\Sigma^{n+k}\Sph, \Th{\nu}\Smash M_+\right]
+    = \left[\Sph, \Sigma^{-n-k}\left(\Th{\nu}\Smash M_+\right)\right]
+    = \left[\Sph, \left(\Sigma^{-n-k}\Th{\nu}\right)\Smash M_+\right]
+  \end{gather*}
+  ist eine \SDual-Abbildung, d.\,h. $\Sigma^{-n-k}\Th{\nu}$
+  repräsentiert das \SDual{} von $M_+$ (als Einhängungsspektrum).
+\end{Bsp}
+
+\nocite{*}
+\printbibliography
+\end{document}
+
