@@ -13,12 +13,12 @@ Das Seminar wurde betreut von
 - Bibliographie: `spanier_whitehead_duality.bib`
 
 ## Kompilieren
-(Getestete) Systemvoraussetzungen: `TeXLive 2017` Distribution
+(Getestete) Systemvoraussetzungen: [`TeXLive 2017` Distribution](https://www.ctan.org/pkg/texlive)
 
 Befehle zum Kompilieren:
 
 ```bash
-lualatex lefschetz_formula.tex
-biber lefschetz_formula
-lualatex lefschetz_formula.tex
+lualatex spanier_whitehead_duality.tex
+biber spanier_whitehead_duality
+lualatex spanier_whitehead_duality.tex
 ```
