@@ -1,0 +1,294 @@
+\documentclass[english]{scrartcl}
+\usepackage{fontspec}
+% \setmainfont{Latin Modern Roman}
+\usepackage{lmodern}
+\usepackage{babel}
+\usepackage{mathtools, amssymb, dsfont, amsthm}
+\usepackage[mathcal]{eucal}
+\usepackage{tikz-cd}
+\usepackage{enumitem}
+\newcommand*{\embrace}[1]{(#1)}
+\usepackage{scrlayer-scrpage}
+\usepackage[backend=biber]{biblatex}
+\bibliography{localisation_completion.bib}
+\usepackage{hyperref}
+\hypersetup{%
+  pdfauthor=Gesina Schwalbe,
+  pdftitle=Stable Homotopy Theory II - Localisation and Completion of Spectra}
+
+\theoremstyle{definition}
+\newtheorem*{Def}{Definition}
+\newtheorem*{DefLem}{Definition/Lemma}
+\newtheorem*{Rev}{Revision}
+\newtheorem*{Thm}{Theorem}
+\newtheorem*{Prop}{Proposition}
+\newtheorem*{Cor}{Corollary}
+\newtheorem*{Lem}{Lemma}
+\newtheorem*{Rem}{Remark}
+\theoremstyle{remark}
+\newtheorem*{Ex}{Example}
+\newtheorem*{App}{Application}
+
+% general language
+\newcommand*{\idest}{i.\,e.\ }
+\newcommand*{\suchthat}{s.\,t.\ }
+\newcommand*{\forexample}{e.\,g.\ }
+\newcommand*{\ifftext}{iff}
+
+% general math
+\newcommand*{\N}{\mathds{N}}
+\newcommand*{\Z}[1][]{\mathds{Z}_{#1}}  % integers and their localisations
+\newcommand*{\Zmod}[1][2]{\Z/#1}
+\newcommand*{\R}{\mathds{R}}
+\newcommand*{\C}{\mathds{C}}
+\newcommand*{\Quaternions}{\mathds{H}}
+\newcommand*{\Octonions}{\mathds{O}}
+\newcommand*{\A}{\mathds{A}}
+\newcommand*{\id}{\text{id}}
+\newcommand*{\longto}{\longrightarrow}
+\newcommand*{\htpic}{\simeq}
+\newcommand*{\smashed}{\wedge}
+\newcommand*{\wedged}{\vee}
+\newcommand*{\Cone}[1]{C(#1)}
+
+% specific
+\newcommand*{\Spectra}{\mathcal{S}} % htpy category of CW-spectra
+\newcommand*{\Sph}{S} % sphere (spectrum)
+\newcommand*{\susp}[2][1]{\Sph^{#1}#2}  % suspension
+\newcommand*{\conem}[2][]{s^{#1}(#2)}  % map to the mapping cone in cofibre seq
+\newcommand*{\Ps}{P}  % set of primes
+\newcommand*{\PS}{\mathcal{P}} % set of all primes
+\newcommand*{\graded}[1]{#1_*}  % with grading (e.g. category)
+\newcommand*{\Abgr}{\graded{\text{Ab}}}  % graded abelian groups
+\newcommand*{\Hiso}{$H$-isomorphism}  % H-iso
+\newcommand*{\pistar}[2][*]{\pi_{#1}(#2)}  % stable htpy grps
+\newcommand*{\timesZ}[1][\Ps]{\otimes_{\Z} \Z[#1]}  % tensor product with Z
+\newcommand*{\LP}[1][\Ps]{L_{#1}}  % stable localised htpy functor
+
+\begin{document}
+\clearpairofpagestyles
+\ohead*{20/12/2017, University of Regensburg}
+\ihead*{Gesina Schwalbe}
+\cfoot*{\pagemark}
+
+\begin{center}
+Seminar on Stable Homotopy Theory II – Summary\par
+  \medskip {\Large\bfseries Localisation and Completion of Spectra}
+\end{center}
+\smallskip
+
+
+\begin{Rev}
+  \begin{itemize}
+  \item For a $\Z$-module $G$, and $S\subset\Z$ a multiplicatively
+    closed subset, the following sequence of canonical maps is exact:
+    \begin{gather*}
+      0 \longto G[S] \longto G \longto S^{-1}G\coloneqq G\otimes
+      S^{-1}\Z
+    \end{gather*}
+    This means localisation eliminates torsion.
+  \item Thus, for $S=\Z/\bigcup_{p\in\Ps}(p)$ with
+    $\Ps\subset\PS\coloneqq\{\text{primes in $\Z$}\}$,
+    $G_P\coloneqq S^{-1}G$ will at most admit $P$-torsion.
+  \item A category is graded if it has a self-equivalence
+    (suspension), \forexample the graded abelian groups $\Abgr$ with
+    index shift or $\Spectra$ with suspension. A functor between
+    graded categories is called graded or stable, if it commutes with
+    the suspensions.
+  \item The homotopy category $\Spectra$ of CW-spectra admits for any
+    map $f\colon X\to Y$ cofibre sequences (called exact triangles)
+    \begin{gather*}
+      {\color{gray} \dotsb \longto \susp[-1] \Cone f
+        \xrightarrow{\conem[-1] f} } X \overset f \longrightarrow Y
+      \xrightarrow{\conem f} \Cone f \xrightarrow{\conem[2]f} \susp X
+      {\color{gray} \longto \dotsb } \;.
+    \end{gather*}
+    A morphism will be
+    \begin{description}
+    \item[monomorphism] (\idest for $g,h\colon Z\to X$ with
+      $f\circ g=f\circ h$ get $g=h$) \ifftext{} $\conem f=0$.
+    \item[epimorphism] (\idest for $g,h\colon Z\to X$ with
+      $g\circ f=h\circ f$ get $g=h$) \ifftext{} $\conem[-1] f = 0$.
+    \end{description}
+    A functor to a graded abelian category is called exact if it is
+    stable and maps a cofibre sequence to an exact sequence.
+  \end{itemize}
+\end{Rev}
+
+\section{Localisation by a functor}
+Let $H\colon\Spectra\to\Abgr$ be an exact functor, $X,Y\in\Spectra$,
+and $f\colon X\to Y$ a morphism.
+
+\begin{Def}
+  \begin{itemize}
+  \item $f$ is called an \Hiso if $H(f)$ is an isomorphism.
+  \item $f$ is called the $H$-localisation of $X$ if it is terminal
+    amongst \Hiso s starting at $X$. This makes
+    the $H$-localisation unique up to equivalence in case it exists
+    and $X_H\coloneqq Y$.
+  \item $W\in\Spectra$ is called $H$-acyclic if $H(W)=0$.
+  \item $Y$ is called $H$-local if $[W, Y]=0$ for any $H$-acyclic spectrum $W$.
+    $\Spectra_H$ is the full subcategory of $H$-local spectra of $\Spectra$.
+  \end{itemize}
+\end{Def}
+
+\begin{Rem}
+  $H$-localisations exist for all $X\in S$ if $H$ is either
+  \begin{description}
+  \item[homology functor], \idest covariant, exact, stable, and commutes with
+    coproducts, or
+  \item[cohomology functor (represented by $W$)], \idest
+    contravariant, exact, stable, and sends coproducts to products,
+    with the additional property that for all spectra $X$ and
+    $\alpha\colon X\to W$, there is $r\in\N$ \suchthat
+    $X\xrightarrow{\alpha} W\to W[-\infty, r]$ is non-zero, where
+    $W[-\infty,r]$ is the $r$th Postnikov-tower of $W$.
+  \end{description}
+  \begin{proof}
+    \cite[Prop. 7.6, and Thm. 7.7]{margolis}
+  \end{proof}
+\end{Rem}
+
+Analoguesly to groups we have the following characterisation of being
+an $H$-localisation.
+\begin{Prop}\label{thm:charhlocal}
+  $f$ is an $H$-localisation \ifftext{} $Y$ is local.
+  Thus the $H$-localisations are uniquely determined by the $H$-local
+  resp. $H$-acyclic spectra.
+  \begin{proof}
+    \begin{description}
+    \item[$\Rightarrow$]
+      Let $W\in\Spectra$ be $H$-acyclic, $g\colon W\to Y$ morphism. In
+      order to show that $g=0$ it suffices to show $\conem g$ is a
+      monomorphism. Applying $H$ to the cofibre sequence of $g$ yields
+      that $\conem g$ is an \Hiso, thus also $\conem g \circ f$.
+      The existence of a retraction for $\conem g$ then follows from
+      terminality of $f$.
+    \item[$\Leftarrow$]
+      Let $g\colon X\to Z$ be an \Hiso. For terminality of $f$ one
+      needs to show that $f$ uniquely factors over $g$, which is
+      implied if $g^*\colon [Z,Y]\to [X,Y]$ is an isomorphism.
+      The latter holds by exactness of the cohomology functor
+      $[-,Y]$.
+    \end{description}
+  \end{proof}
+\end{Prop}
+\begin{Cor}
+  \begin{enumerate}
+  \item The $H$-localisation of $X$ is initial amongst morphisms
+    from $X$ to an $H$-local spectrum.
+  \item Thus every map $f\colon X\to Y$ has a unique $H$-localisation
+    $f_H\colon X_H\to Y_H$ s.t.
+    $f_H\circ l_x = l_H\circ f\colon X\to Y_H$,
+    if both $H$-localisations $l_X$, $l_Y$ exist.
+  \item If all $H$-localisations exist, we get an exact functor
+    $\Spectra\to \Spectra_H$, $X\mapsto X_H$, $f\mapsto f_H$.
+  \end{enumerate}
+  \begin{proof}
+    $H$-localisations being initial is proven analoguesly to
+    $\Leftarrow$ in \ref{thm:charhlocal}, with the \Hiso{} as $g$.
+    This then shows functoriality and exactness follows using the five lemma.
+  \end{proof}
+\end{Cor}
+
+\section{Special Case: $\Ps$-Localisation}
+Now let $H\coloneqq \LP\coloneqq \pistar{-}\timesZ$ for $\Ps\subset\PS$, which is a homology
+functor represented by the $\Z[\Ps]$-Moore-spectrum \cite[p.\,111,
+Exc. (a)]{margolis}.
+Write $X_{\Ps}$ for the $\LP$-localisation of $X$.
+
+\begin{Prop}
+  $f$ is the $\LP$-localisation \ifftext{}
+  $\pistar f\colon \pistar X\to \pistar Y$ is a
+  $\Ps$-localisation map.
+  Or equivalently:
+  $Y$ is $\LP$-local \ifftext{}
+  $\pistar Y$ is $\Ps$-local, \idest a $\Z[\Ps]$-module.
+  \begin{proof}
+    \begin{description}
+    \item[$\Rightarrow$] Let $Y$ be $\LP$-local.
+      Being a $\Z[\Ps]$-module is equivalent to multiplication by $q$,
+      $(-\cdot q)$, being an isomorphism for $q\in\PS\setminus\Ps$.
+      So for $q\in\PS\setminus\Ps$ consider the $q$-times pinching map
+      $\times q=\sum_{i=1}^q \id_Y$ which is $(-\cdot q)$ on homotopy
+      and thus an isomorphism on $\LP(Y)$.
+      By exactness of $\LP$, $\Cone{\times q}$ is $\LP$-acyclic,
+      especially the $\LP$-localisation of it is 0.
+      By exactness of the $\LP$-localisation, and with $Y_{\Ps}=Y$,
+      $(\times q)_{\Ps}=\times q$, $\times q$ is an isomorphism, and
+      thus also $(-\cdot q)\colon \pistar Y \to \pistar Y$.
+    \item[$\Leftarrow$] Let $\pistar Y$ be a $\Z[\Ps]$-module and
+      $W\in\Spectra$ $\LP$-acyclic.
+      To see that any morphism $f\in [W,Y]$ is zero, one first has to
+      conclude that the $\LP$-localisation $l_Y$ of $Y$ is an
+      isomorphism. But this follows with Whitehead's Theorem for
+      spectra from the isomorphism in the localisation diagram
+      \begin{center}
+        \begin{tikzcd}
+          \pistar Y \ar[r]
+          \ar[d, "\cong", "\text{ by ass.}" swap]
+          \arrow[dr, phantom, "\circlearrowleft" description]
+          & \pistar Y_{\Ps}
+          \ar[d, "\cong", "\text{ by "$\Rightarrow$"}" swap] \\
+          \pistar{Y}\timesZ \ar[r, "\cong", "\LP(l_Y)" swap]
+          & \pistar{Y_{\Ps}}\timesZ
+        \end{tikzcd}
+      \end{center}
+      Now $f$ will always factor over its $\LP$-localisation $f_{\Ps}$
+      which is 0, as $W_{\Ps}$ is 0.
+    \end{description}
+  \end{proof}
+\end{Prop}
+
+\begin{Rem}
+Having adapted the notion of prime localisation to spectra one finds
+that we have very similar properties for spectra concerning the
+detection of torsion. We can now define torsion spectra as those whose
+$\LP[(0)]$-localisation (\idest rational homotopy groups) vanishes.
+Having only torsion for primes in a certain $\Ps\subset\PS$ (the
+$\Ps$-primary spectra) can be characterised as being
+$\LP[\Ps^c]$-acyclic.
+
+Analoguesly to purely torsion abelian groups, torsion spectra have the
+property that localisation at any set of primes $\Ps\subset\PS$ will
+be an epimorphism (for groups this means: elements are either already
+invertible or torsion; there is no free part).
+\begin{proof}
+  To check this for a torsion spectrum $T$ with $\LP$-localisation
+  $l_T$ just verify that
+  \begin{enumerate}[nosep]
+  \item the $\LP$-localisation $T_{\Ps}$ is
+    $\LP[\Ps^c]$-acyclic, and
+  \item the cone $\Cone {l_T}$ is $\LP[\Ps^c]$-local
+    (it is isomorphic to $T_{\Ps^c}$ by exactness of
+    localisation).
+  \end{enumerate}
+  Then $\conem {l_T} \in [T_{\Ps}, \Cone {l_T}]=0$.
+\end{proof}
+\end{Rem}
+
+\section{$\Ps$-Completion}
+
+\begin{Rev}
+  
+\end{Rev}
+\begin{Def}
+  P-Completion
+\end{Def}
+\begin{Lem}
+  Existence for f.t., P-local Spectra
+  \begin{proof}[construction]
+  \end{proof}
+\end{Lem}
+
+\begin{Def}
+  Pro A-Completion
+\end{Def}
+\begin{Thm}
+  Pro A-Completion is the same as P-Completion on f.t. P-local
+  spectra.
+\end{Thm}
+
+\nocite{*} \printbibliography
+\end{document}
+
