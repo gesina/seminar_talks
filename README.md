@@ -26,9 +26,11 @@ Talks in this repository:
 - [Localisation and Completion of Spectra](./localisation_completion_of_spectra),
   20/12/2017
   
-Links to non-mathematics talks:
+Links to non-(directly-)mathematics talks:
 - [Overview on a selection of typographical topics](https://github.com/gesina/typography_talk),
   11/06/2016
+- [Image segmentation](https://github.com/gesina/image_segmentation_talk),
+  07/05/2018
 
 ## Cloning one Talk
 To clone and work with the source of only one talk of this repository you can use 
