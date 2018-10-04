@@ -15,6 +15,8 @@ Links to repositories with further talks:
   (German), 28/09/2016
 - [Lefschetz fixed-point formula for étale cohomology](https://github.com/gesina/lefschetz_fixed-point_formula),
   12/06/2017
+- [Master thesis: Immersions and Stiefel-Whitney Classes of Manifolds](https://github.com/gesina/master_thesis),
+  04/10/2018
   
 Talks in this repository:
 - [Spanier-Whitehead-Dualität](./spanier_whitehead_duality)
